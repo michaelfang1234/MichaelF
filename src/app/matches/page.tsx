@@ -25,7 +25,7 @@ export default function MatchesPage() {
     <main className="space-y-4">
       <h1 className="text-3xl font-semibold tracking-tight">Volleyball Matches</h1>
       <p className="text-slate-400 text-sm">U19 Girls • SSSA Volleyball League</p>
-      {q ? <p className="text-sm text-orange-200">Search: "{q}" • {filtered.length} result(s)</p> : null}
+      {q ? <p className="text-sm text-orange-200">Search: &quot;{q}&quot; • {filtered.length} result(s)</p> : null}
 
       <div className="grid gap-4 md:grid-cols-2">
         {filtered.map((m, i) => (
@@ -45,4 +45,5 @@ export default function MatchesPage() {
     </main>
   );
 }
+
 
