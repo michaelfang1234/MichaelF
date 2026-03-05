@@ -2,8 +2,8 @@
   return (
     <main className="space-y-4">
       <h1 className="text-3xl font-semibold tracking-tight">News</h1>
-      <p className="text-slate-300">Latest updates.</p>
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-4">Matchday 12 preview is out now.</div>
+      <div className="glass rounded-2xl p-4 card-hover">Matchday 12 preview released.</div>
+      <div className="glass rounded-2xl p-4 card-hover">Injury update: Squad depth tested.</div>
     </main>
   );
 }

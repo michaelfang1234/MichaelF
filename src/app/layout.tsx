@@ -2,18 +2,12 @@
 import Link from "next/link";
 import "./globals.css";
 import PageTransition from "@/components/page-transition";
+import TopNav from "@/components/top-nav";
 
 export const metadata = {
   title: "HSPN",
   description: "HSPN sports dashboard",
 };
-
-const nav = [
-  { label: "Live", href: "/live" },
-  { label: "Matches", href: "/matches" },
-  { label: "Standings", href: "/standings" },
-  { label: "Teams", href: "/teams" },
-];
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -31,22 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 priority
               />
               <div>
-                <div className="text-4 font-semibold tracking-tight text-white">HSPN</div>
+                <div className="text-lg font-semibold tracking-tight text-white">HSPN</div>
                 <div className="text-xs text-slate-400">Sports dashboard</div>
               </div>
             </Link>
-
-            <nav className="hidden gap-2 sm:flex">
-              {nav.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-slate-100 transition hover:bg-white/10"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
+            <TopNav />
           </header>
 
           <main className="mt-10">

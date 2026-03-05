@@ -17,3 +17,20 @@ body {
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+.motion-safe {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.card-hover {
+  transition: transform 220ms ease, opacity 220ms ease, background-color 220ms ease, border-color 220ms ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px) scale(1.01);
+}
+
+.glass {
+  @apply border border-white/10 bg-white/5 backdrop-blur;
+}
