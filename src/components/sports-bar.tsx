@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 
@@ -25,16 +24,20 @@ const volleyballSchedule = [
 ];
 
 export default function SportsBar() {
-  const sp = useSearchParams();
   const [activeSport, setActiveSport] = useState<SportKey | null>(null);
   const [activeSection, setActiveSection] = useState<SectionKey>("Home");
 
   useEffect(() => {
-    if (sp.get("reset") === "1") {
-      setActiveSport(null);
-      setActiveSection("Home");
-    }
-  }, [sp]);
+    const resetIfNeeded = () => {
+      if (typeof window !== "undefined" && window.location.hash === "#reset") {
+        setActiveSport(null);
+        setActiveSection("Home");
+      }
+    };
+    resetIfNeeded();
+    window.addEventListener("hashchange", resetIfNeeded);
+    return () => window.removeEventListener("hashchange", resetIfNeeded);
+  }, []);
 
   const league = useMemo(() => (activeSport ? leagueBySport[activeSport] : ""), [activeSport]);
 

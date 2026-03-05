@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="border-b border-white/10 bg-black/30 backdrop-blur">
           <div className="mx-auto max-w-7xl px-4 py-3">
             <div className="flex items-center justify-between gap-3">
-              <Link href="/?reset=1" className="flex items-center gap-3">
+              <Link href="/#reset" className="flex items-center gap-3">
                 <Image src="/logo.png" alt="Hiba Lions" width={40} height={40} className="rounded-lg" priority />
                 <div>
                   <div className="font-semibold">Hiba Lions</div>

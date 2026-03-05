@@ -7,17 +7,16 @@ type P = {
   key: string;
   name: string;
   sport: "Basketball" | "Volleyball";
-  team: string;
   division: string;
   height: number;
   weight: number;
 };
 
 const players: P[] = [
-  { key: "michael", name: "Michael Fang", sport: "Basketball", team: "Hiba Lions", division: "U19 Boys Basketball Team", height: 185, weight: 69 },
-  { key: "andy", name: "Andy Gu", sport: "Basketball", team: "Hiba Lions", division: "U19 Boys Basketball Team", height: 188, weight: 75 },
-  { key: "ariel", name: "Ariel Pan", sport: "Volleyball", team: "Hiba Lions", division: "U19 Girls Volleyball Team", height: 171, weight: 53 },
-  { key: "michelle", name: "Michelle Xu", sport: "Volleyball", team: "Hiba Lions", division: "U19 Girls Volleyball Team", height: 170, weight: 58 },
+  { key: "michael", name: "Michael Fang", sport: "Basketball", division: "U19 Boys Basketball Team", height: 185, weight: 69 },
+  { key: "andy", name: "Andy Gu", sport: "Basketball", division: "U19 Boys Basketball Team", height: 188, weight: 75 },
+  { key: "ariel", name: "Ariel Pan", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 171, weight: 53 },
+  { key: "michelle", name: "Michelle Xu", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 170, weight: 58 },
 ];
 
 export default function PlayersPage() {
@@ -26,9 +25,15 @@ export default function PlayersPage() {
 
   const result = useMemo(() => {
     if (!q) return players;
-    const exact = players.find(p => p.key === q);
+    // 只要匹配 key 或完整姓名，就只返回一个
+    const exact =
+      players.find((p) => p.key === q) ||
+      players.find((p) => p.name.toLowerCase() === q);
     if (exact) return [exact];
-    return players.filter(p => `${p.name} ${p.key}`.toLowerCase().includes(q));
+
+    // 否则再做 contains，但最多返回第一条，避免“全出来”
+    const fuzzy = players.find((p) => `${p.key} ${p.name}`.toLowerCase().includes(q));
+    return fuzzy ? [fuzzy] : [];
   }, [q]);
 
   return (

@@ -1,18 +1,13 @@
-﻿export default function MatchesPage() {
-  const matches = [
-    { league: "Girls League", home: "Hiba Lions", away: "NACIS", date: "March 17", time: "5:00 PM", venue: "Home", status: "UPCOMING" },
-    { league: "Girls League", home: "Hiba Lions", away: "KCIS", date: "March 25", time: "5:15 PM", venue: "Home", status: "UPCOMING" },
-    { league: "Girls League", home: "PingHe", away: "Hiba Lions", date: "April 1", time: "5:00 PM", venue: "Away", status: "UPCOMING" },
-    { league: "Girls League", home: "Hiba Lions", away: "QDHS", date: "April 7", time: "5:00 PM", venue: "Home", status: "UPCOMING" },
-  ];
+﻿import { volleyballMatches } from "@/data/matches";
 
+export default function MatchesPage() {
   return (
     <main className="space-y-4">
       <h1 className="text-3xl font-semibold tracking-tight">Volleyball Matches</h1>
       <p className="text-slate-400 text-sm">U19 Girls • SSSA Volleyball League</p>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {matches.map((m, i) => (
+        {volleyballMatches.map((m, i) => (
           <article key={i} className="rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10">
             <div className="mb-2 flex items-center justify-between text-xs text-slate-400">
               <span>{m.league}</span>
