@@ -9,14 +9,14 @@ type P = {
   sport: "Basketball" | "Volleyball";
   division: string;
   height: number;
-  weight: number;
+  weight: number | null; // null => unknown
 };
 
 const players: P[] = [
   { key: "michael", name: "Michael Fang", sport: "Basketball", division: "U19 Boys Basketball Team", height: 185, weight: 69 },
   { key: "andy", name: "Andy Gu", sport: "Basketball", division: "U19 Boys Basketball Team", height: 188, weight: 75 },
-  { key: "ariel", name: "Ariel Pan", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 171, weight: 53 },
-  { key: "michelle", name: "Michelle Xu", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 170, weight: 58 },
+  { key: "ariel", name: "Ariel Pan", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 171, weight: null },
+  { key: "michelle", name: "Michelle Xu", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 170, weight: null },
 ];
 
 export default function PlayersPage() {
@@ -25,13 +25,11 @@ export default function PlayersPage() {
 
   const result = useMemo(() => {
     if (!q) return players;
-    // 只要匹配 key 或完整姓名，就只返回一个
     const exact =
       players.find((p) => p.key === q) ||
       players.find((p) => p.name.toLowerCase() === q);
     if (exact) return [exact];
 
-    // 否则再做 contains，但最多返回第一条，避免“全出来”
     const fuzzy = players.find((p) => `${p.key} ${p.name}`.toLowerCase().includes(q));
     return fuzzy ? [fuzzy] : [];
   }, [q]);
@@ -41,28 +39,14 @@ export default function PlayersPage() {
       <h1 className="text-3xl font-semibold tracking-tight">Players</h1>
       {q ? <p className="text-sm text-orange-200">Search: &quot;{q}&quot; • {result.length} result(s)</p> : null}
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-3 md:grid-cols-2">
         {result.map((p) => (
-          <article key={p.key} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <h2 className="text-2xl font-semibold">{p.name}</h2>
-            <p className="mt-1 text-slate-300">{p.division}</p>
-            <p className="mt-1 text-sm text-slate-400">Height: {p.height} cm • Weight: {p.weight} kg</p>
-
-            {p.sport === "Basketball" ? (
-              <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">PTS: 0.0</div>
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">REB: 0.0</div>
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">AST: 0.0</div>
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">FG%: 0.0</div>
-              </div>
-            ) : (
-              <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">Kills: 0.0</div>
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">Blocks: 0.0</div>
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">Aces: 0.0</div>
-                <div className="rounded-lg border border-white/10 bg-black/20 p-2">Digs: 0.0</div>
-              </div>
-            )}
+          <article key={p.key} className="rounded-xl border border-white/10 bg-black/20 p-4 hover:bg-white/5 transition">
+            <p className="text-4 font-semibold">{p.name}</p>
+            <p className="text-sm text-slate-400 mt-1">{p.division}</p>
+            <p className="text-sm text-slate-300 mt-2">
+              Height: {p.height} cm • Weight: {p.weight === null ? "unknown" : `${p.weight} kg`}
+            </p>
           </article>
         ))}
       </div>
