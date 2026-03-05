@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="mx-auto max-w-7xl px-4 py-3">
             <div className="flex items-center justify-between gap-3">
               <Link
-                href="/"
+                href="/?reset=1"
                 className="flex items-center gap-3"
                 onClick={() => window.dispatchEvent(new Event("Hiba Lions:reset-nav"))}
               >
@@ -40,4 +40,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
 

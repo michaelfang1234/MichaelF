@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";`r`nimport { useSearchParams } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 
@@ -28,8 +28,15 @@ const volleyballU19Girls = [
 ];
 
 export default function SportsBar() {
+  const searchParams = useSearchParams();
   const [activeSport, setActiveSport] = useState<SportKey | null>(null);
   const [activeSection, setActiveSection] = useState<SectionKey>("Home");
+  useEffect(() => {
+    if (searchParams.get("reset") === "1") {
+      setActiveSport(null);
+      setActiveSection("Home");
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const handler = () => {
@@ -198,3 +205,4 @@ export default function SportsBar() {
     </div>
   );
 }
+
