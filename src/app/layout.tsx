@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import SportsBar from "@/components/sports-bar";
+import TopSearch from "@/components/top-search";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div className="border-b border-white/10 bg-black/30 backdrop-blur">
           <div className="mx-auto max-w-7xl px-4 py-3">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <Link
                 href="/"
                 className="flex items-center gap-3"
@@ -23,8 +24,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <div className="text-xs text-slate-400">Huili Sports Network</div>
                 </div>
               </Link>
-              <div className="text-xs text-slate-300">Live • Scores • News</div>
+
+              <div className="flex items-center gap-3">
+                <div className="hidden text-xs text-slate-300 md:block">Live • Scores • News</div>
+                <TopSearch />
+              </div>
             </div>
+
             <SportsBar />
           </div>
         </div>
