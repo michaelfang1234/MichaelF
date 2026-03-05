@@ -8,10 +8,10 @@ const dataset = [
   { kind: "match", title: "Hiba Lions vs KCIS", sub: "Volleyball • March 25 • 5:15 PM", href: "/matches" },
   { kind: "match", title: "PingHe vs Hiba Lions", sub: "Volleyball • April 1 • 5:00 PM", href: "/matches" },
 
-  { kind: "player", title: "Michael Fang", sub: "U19 Boys Basketball Team • 185cm • 69kg", href: "/players" },
-  { kind: "player", title: "Andy Gu", sub: "U19 Boys Basketball Team • 188cm • 75kg", href: "/players" },
-  { kind: "player", title: "Ariel Pan", sub: "U19 Girls Volleyball Team • 171cm • 53kg", href: "/players" },
-  { kind: "player", title: "Michelle Xu", sub: "U19 Girls Volleyball Team • 170cm • 58kg", href: "/players" },
+  { kind: "player", title: "Michael Fang", sub: "U19 Boys Basketball Team • 185cm • 69kg", href: "/players/michael" },
+  { kind: "player", title: "Andy Gu", sub: "U19 Boys Basketball Team • 188cm • 75kg", href: "/players/andy" },
+  { kind: "player", title: "Ariel Pan", sub: "U19 Girls Volleyball Team • 171cm • Weight unknown", href: "/players/ariel" },
+  { kind: "player", title: "Michelle Xu", sub: "U19 Girls Volleyball Team • 170cm • Weight unknown", href: "/players/michelle" },
 ];
 
 export default function TopSearch() {

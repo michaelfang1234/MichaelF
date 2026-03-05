@@ -1,22 +1,24 @@
 ﻿"use client";
 
+import Link from "next/link";
 import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 type P = {
+  id: string;
   key: string;
   name: string;
   sport: "Basketball" | "Volleyball";
   division: string;
   height: number;
-  weight: number | null; // null => unknown
+  weight: number | null;
 };
 
 const players: P[] = [
-  { key: "michael", name: "Michael Fang", sport: "Basketball", division: "U19 Boys Basketball Team", height: 185, weight: 69 },
-  { key: "andy", name: "Andy Gu", sport: "Basketball", division: "U19 Boys Basketball Team", height: 188, weight: 75 },
-  { key: "ariel", name: "Ariel Pan", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 171, weight: null },
-  { key: "michelle", name: "Michelle Xu", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 170, weight: null },
+  { id: "michael", key: "michael", name: "Michael Fang", sport: "Basketball", division: "U19 Boys Basketball Team", height: 185, weight: 69 },
+  { id: "andy", key: "andy", name: "Andy Gu", sport: "Basketball", division: "U19 Boys Basketball Team", height: 188, weight: 75 },
+  { id: "ariel", key: "ariel", name: "Ariel Pan", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 171, weight: null },
+  { id: "michelle", key: "michelle", name: "Michelle Xu", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 170, weight: null },
 ];
 
 export default function PlayersPage() {
@@ -29,7 +31,6 @@ export default function PlayersPage() {
       players.find((p) => p.key === q) ||
       players.find((p) => p.name.toLowerCase() === q);
     if (exact) return [exact];
-
     const fuzzy = players.find((p) => `${p.key} ${p.name}`.toLowerCase().includes(q));
     return fuzzy ? [fuzzy] : [];
   }, [q]);
@@ -41,13 +42,13 @@ export default function PlayersPage() {
 
       <div className="grid gap-3 md:grid-cols-2">
         {result.map((p) => (
-          <article key={p.key} className="rounded-xl border border-white/10 bg-black/20 p-4 hover:bg-white/5 transition">
+          <Link key={p.id} href={`/players/${p.id}`} className="rounded-xl border border-white/10 bg-black/20 p-4 hover:bg-white/5 transition block">
             <p className="text-4 font-semibold">{p.name}</p>
             <p className="text-sm text-slate-400 mt-1">{p.division}</p>
             <p className="text-sm text-slate-300 mt-2">
               Height: {p.height} cm • Weight: {p.weight === null ? "unknown" : `${p.weight} kg`}
             </p>
-          </article>
+          </Link>
         ))}
       </div>
     </main>
