@@ -4,14 +4,14 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 const dataset = [
-  { kind: "match", title: "Hiba Lions vs NACIS", sub: "Volleyball • March 17 • 5:00 PM", href: "/matches?q=nacis" },
-  { kind: "match", title: "Hiba Lions vs KCIS", sub: "Volleyball • March 25 • 5:15 PM", href: "/matches?q=kcis" },
-  { kind: "match", title: "PingHe vs Hiba Lions", sub: "Volleyball • April 1 • 5:00 PM", href: "/matches?q=pinghe" },
+  { kind: "match", title: "Hiba Lions vs NACIS", sub: "Volleyball • March 17 • 5:00 PM", href: "/matches" },
+  { kind: "match", title: "Hiba Lions vs KCIS", sub: "Volleyball • March 25 • 5:15 PM", href: "/matches" },
+  { kind: "match", title: "PingHe vs Hiba Lions", sub: "Volleyball • April 1 • 5:00 PM", href: "/matches" },
 
-  { kind: "player", title: "Michael Fang", sub: "U19 Boys Basketball Team • 185cm • 69kg", href: "/players?q=michael" },
-  { kind: "player", title: "Andy Gu", sub: "U19 Boys Basketball Team • 188cm • 75kg", href: "/players?q=andy" },
-  { kind: "player", title: "Ariel Pan", sub: "U19 Girls Volleyball Team • 171cm • 53kg", href: "/players?q=ariel" },
-  { kind: "player", title: "Michelle Xu", sub: "U19 Girls Volleyball Team • 170cm • 58kg", href: "/players?q=michelle" },
+  { kind: "player", title: "Michael Fang", sub: "U19 Boys Basketball Team • 185cm • 69kg", href: "/players" },
+  { kind: "player", title: "Andy Gu", sub: "U19 Boys Basketball Team • 188cm • 75kg", href: "/players" },
+  { kind: "player", title: "Ariel Pan", sub: "U19 Girls Volleyball Team • 171cm • 53kg", href: "/players" },
+  { kind: "player", title: "Michelle Xu", sub: "U19 Girls Volleyball Team • 170cm • 58kg", href: "/players" },
 ];
 
 export default function TopSearch() {
