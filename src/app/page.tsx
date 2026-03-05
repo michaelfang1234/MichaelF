@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <div className="space-y-8">
       <section className="rounded-3xl border border-white/10 bg-gradient-to-r from-[#0f1c34] via-[#0b1a33] to-[#1d1638] p-8">
-        <h1 className="text-5xl font-semibold tracking-tight">HSPN Dashboard</h1>
+        <h1 className="text-5xl font-semibold tracking-tight">Hiba Lions Dashboard</h1>
         <p className="mt-3 text-xl text-slate-300">Premium motion + dynamic experience.</p>
       </section>
 
@@ -32,3 +32,4 @@ export default function HomePage() {
     </div>
   );
 }
+

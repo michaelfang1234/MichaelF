@@ -16,11 +16,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link
                 href="/"
                 className="flex items-center gap-3"
-                onClick={() => window.dispatchEvent(new Event("hspn:reset-nav"))}
+                onClick={() => window.dispatchEvent(new Event("Hiba Lions:reset-nav"))}
               >
-                <Image src="/logo.png" alt="HSPN" width={40} height={40} className="rounded-lg" priority />
+                <Image src="/logo.png" alt="Hiba Lions" width={40} height={40} className="rounded-lg" priority />
                 <div>
-                  <div className="font-semibold">HSPN</div>
+                  <div className="font-semibold">Hiba Lions</div>
                   <div className="text-xs text-slate-400">Huili Sports Network</div>
                 </div>
               </Link>
@@ -40,3 +40,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+

@@ -17,13 +17,13 @@ const leagueBySport: Record<SportKey, string> = {
 };
 
 const volleyballU19Girls = [
-  { date: "March 17", home: "HSPN", away: "NACIS", venueType: "Home", time: "5:00 PM", status: "UPCOMING" },
-  { date: "March 25", home: "HSPN", away: "KCIS", venueType: "Home", time: "5:15 PM", status: "UPCOMING" },
-  { date: "April 1", home: "PingHe", away: "HSPN", venueType: "Away", time: "5:00 PM", status: "UPCOMING" },
-  { date: "April 7", home: "HSPN", away: "QDHS", venueType: "Home", time: "5:00 PM", status: "UPCOMING" },
-  { date: "April 17", home: "WCIS", away: "HSPN", venueType: "Away", time: "5:00 PM", status: "UPCOMING" },
-  { date: "April 22", home: "HSPN", away: "UCS", venueType: "Home", time: "5:00 PM", status: "UPCOMING" },
-  { date: "April 28", home: "SUIS QP*", away: "HSPN", venueType: "Away", time: "5:00 PM", status: "UPCOMING" },
+  { date: "March 17", home: "Hiba Lions", away: "NACIS", venueType: "Home", time: "5:00 PM", status: "UPCOMING" },
+  { date: "March 25", home: "Hiba Lions", away: "KCIS", venueType: "Home", time: "5:15 PM", status: "UPCOMING" },
+  { date: "April 1", home: "PingHe", away: "Hiba Lions", venueType: "Away", time: "5:00 PM", status: "UPCOMING" },
+  { date: "April 7", home: "Hiba Lions", away: "QDHS", venueType: "Home", time: "5:00 PM", status: "UPCOMING" },
+  { date: "April 17", home: "WCIS", away: "Hiba Lions", venueType: "Away", time: "5:00 PM", status: "UPCOMING" },
+  { date: "April 22", home: "Hiba Lions", away: "UCS", venueType: "Home", time: "5:00 PM", status: "UPCOMING" },
+  { date: "April 28", home: "SUIS QP*", away: "Hiba Lions", venueType: "Away", time: "5:00 PM", status: "UPCOMING" },
 ];
 
 export default function SportsBar() {
@@ -35,8 +35,8 @@ export default function SportsBar() {
       setActiveSport(null);
       setActiveSection("Home");
     };
-    window.addEventListener("hspn:reset-nav", handler);
-    return () => window.removeEventListener("hspn:reset-nav", handler);
+    window.addEventListener("Hiba Lions:reset-nav", handler);
+    return () => window.removeEventListener("Hiba Lions:reset-nav", handler);
   }, []);
 
   const league = useMemo(() => (activeSport ? leagueBySport[activeSport] : ""), [activeSport]);
@@ -79,7 +79,7 @@ export default function SportsBar() {
     if (!activeSport) {
       return (
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-          <h2 className="text-2xl font-semibold">Explore HSPN Sports</h2>
+          <h2 className="text-2xl font-semibold">Explore Hiba Lions Sports</h2>
           <p className="mt-2 text-slate-300">Choose a sport above to view Home, Scores, Schedule, Standings, and Teams.</p>
           <p className="mt-4 text-sm text-slate-400">No default sport selected (ESPN-style entry).</p>
         </div>
@@ -121,3 +121,4 @@ export default function SportsBar() {
     </div>
   );
 }
+

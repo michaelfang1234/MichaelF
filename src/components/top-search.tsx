@@ -4,13 +4,13 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 
 const dataset = [
-  { type: "match", sport: "Volleyball", title: "HSPN vs NACIS", date: "March 17", time: "5:00 PM" },
-  { type: "match", sport: "Volleyball", title: "HSPN vs KCIS", date: "March 25", time: "5:15 PM" },
-  { type: "match", sport: "Volleyball", title: "PingHe vs HSPN", date: "April 1", time: "5:00 PM" },
-  { type: "match", sport: "Volleyball", title: "HSPN vs QDHS", date: "April 7", time: "5:00 PM" },
-  { type: "match", sport: "Volleyball", title: "WCIS vs HSPN", date: "April 17", time: "5:00 PM" },
-  { type: "match", sport: "Volleyball", title: "HSPN vs UCS", date: "April 22", time: "5:00 PM" },
-  { type: "match", sport: "Volleyball", title: "SUIS QP* vs HSPN", date: "April 28", time: "5:00 PM" },
+  { type: "match", sport: "Volleyball", title: "Hiba Lions vs NACIS", date: "March 17", time: "5:00 PM" },
+  { type: "match", sport: "Volleyball", title: "Hiba Lions vs KCIS", date: "March 25", time: "5:15 PM" },
+  { type: "match", sport: "Volleyball", title: "PingHe vs Hiba Lions", date: "April 1", time: "5:00 PM" },
+  { type: "match", sport: "Volleyball", title: "Hiba Lions vs QDHS", date: "April 7", time: "5:00 PM" },
+  { type: "match", sport: "Volleyball", title: "WCIS vs Hiba Lions", date: "April 17", time: "5:00 PM" },
+  { type: "match", sport: "Volleyball", title: "Hiba Lions vs UCS", date: "April 22", time: "5:00 PM" },
+  { type: "match", sport: "Volleyball", title: "SUIS QP* vs Hiba Lions", date: "April 28", time: "5:00 PM" },
 ];
 
 export default function TopSearch() {
@@ -60,3 +60,4 @@ export default function TopSearch() {
     </div>
   );
 }
+

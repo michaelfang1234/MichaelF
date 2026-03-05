@@ -15,3 +15,4 @@ export default function PageTransition({ children }: { children: ReactNode }) {
     </motion.div>
   );
 }
+
