@@ -1,10 +1,13 @@
-﻿"use client";
-
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import SportsBar from "@/components/sports-bar";
 import TopSearch from "@/components/top-search";
+
+export const metadata = {
+  title: "Hiba Lions",
+  description: "Huili Sports Network",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -13,11 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="border-b border-white/10 bg-black/30 backdrop-blur">
           <div className="mx-auto max-w-7xl px-4 py-3">
             <div className="flex items-center justify-between gap-3">
-              <Link
-                href="/?reset=1"
-                className="flex items-center gap-3"
-                onClick={() => window.dispatchEvent(new Event("Hiba Lions:reset-nav"))}
-              >
+              <Link href="/?reset=1" className="flex items-center gap-3">
                 <Image src="/logo.png" alt="Hiba Lions" width={40} height={40} className="rounded-lg" priority />
                 <div>
                   <div className="font-semibold">Hiba Lions</div>
@@ -40,5 +39,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
-
