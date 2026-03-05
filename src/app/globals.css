@@ -4,33 +4,43 @@
 
 :root {
   color-scheme: dark;
+  --huili-orange: #F26A3D;
+  --huili-orange-dark: #D9552B;
+  --bg-main: #0B1220;
+  --bg-card: #111827;
+  --text-main: #F8FAFC;
+  --text-sub: #CBD5E1;
+  --line: rgba(255,255,255,0.12);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-  @apply bg-slate-950 text-slate-100;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(242,106,61,0.20), transparent 50%),
+    radial-gradient(900px 500px at 90% 0%, rgba(56,189,248,0.10), transparent 45%),
+    var(--bg-main);
+  color: var(--text-main);
 }
 
-* {
-  -webkit-tap-highlight-color: transparent;
+* { -webkit-tap-highlight-color: transparent; }
+
+.glass {
+  background: color-mix(in oklab, var(--bg-card) 82%, black);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
 }
 
-.motion-safe {
-  will-change: transform, opacity;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+.brand-pill {
+  background: rgba(242,106,61,0.18);
+  color: #FFD9CC;
+  border: 1px solid rgba(242,106,61,0.35);
 }
 
 .card-hover {
-  transition: transform 220ms ease, opacity 220ms ease, background-color 220ms ease, border-color 220ms ease;
+  transition: transform 220ms ease, background-color 220ms ease, border-color 220ms ease;
 }
 .card-hover:hover {
-  transform: translateY(-3px) scale(1.01);
-}
-
-.glass {
-  @apply border border-white/10 bg-white/5 backdrop-blur;
+  transform: translateY(-3px);
+  border-color: rgba(242,106,61,0.35);
 }

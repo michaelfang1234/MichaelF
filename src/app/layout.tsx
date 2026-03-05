@@ -1,45 +1,34 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
-import PageTransition from "@/components/page-transition";
-import TopNav from "@/components/top-nav";
+import SportsBar from "@/components/sports-bar";
 
 export const metadata = {
   title: "HSPN",
-  description: "HSPN sports dashboard",
+  description: "HSPN Sports Portal",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen">
-        <div className="mx-auto max-w-6xl px-6 py-10">
-          <header className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <Image
-                src="/logo.png"
-                alt="HSPN logo"
-                width={44}
-                height={44}
-                className="rounded-xl"
-                priority
-              />
-              <div>
-                <div className="text-lg font-semibold tracking-tight text-white">HSPN</div>
-                <div className="text-xs text-slate-400">Sports dashboard</div>
-              </div>
-            </Link>
-            <TopNav />
-          </header>
-
-          <main className="mt-10">
-            <PageTransition>{children}</PageTransition>
-          </main>
-
-          <footer className="mt-16 border-t border-white/10 pt-6 text-xs text-slate-400">
-            Built with Next.js
-          </footer>
+      <body>
+        <div className="border-b border-white/10 bg-black/30 backdrop-blur">
+          <div className="mx-auto max-w-7xl px-4 py-3">
+            <div className="flex items-center justify-between">
+              <Link href="/" className="flex items-center gap-3">
+                <Image src="/logo.png" alt="HSPN" width={40} height={40} className="rounded-lg" priority />
+                <div>
+                  <div className="font-semibold">HSPN</div>
+                  <div className="text-xs text-slate-400">Huili Sports Network</div>
+                </div>
+              </Link>
+              <div className="text-xs text-slate-300">Live • Scores • News</div>
+            </div>
+            <SportsBar />
+          </div>
         </div>
+
+        <main className="mx-auto max-w-7xl px-4 py-6">{children}</main>
       </body>
     </html>
   );
