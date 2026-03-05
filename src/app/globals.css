@@ -3,9 +3,17 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   @apply bg-slate-950 text-slate-100;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
