@@ -1,0 +1,10 @@
+﻿[
+  { "id": 1, "sport": "Volleyball", "league": "Girls League", "date": "March 17", "time": "5:00 PM", "homeTeam": "HSPN", "awayTeam": "NACIS", "venueType": "Home" },
+  { "id": 2, "sport": "Volleyball", "league": "Girls League", "date": "March 25", "time": "5:15 PM", "homeTeam": "HSPN", "awayTeam": "KCIS", "venueType": "Home" },
+  { "id": 3, "sport": "Volleyball", "league": "Girls League", "date": "April 1", "time": "5:00 PM", "homeTeam": "PingHe", "awayTeam": "HSPN", "venueType": "Away" },
+  { "id": 4, "sport": "Basketball", "league": "Varsity Cup", "date": "April 3", "time": "7:30 PM", "homeTeam": "HSPN", "awayTeam": "City Blue", "venueType": "Home" },
+  { "id": 5, "sport": "Basketball", "league": "Varsity Cup", "date": "April 12", "time": "6:00 PM", "homeTeam": "North Stars", "awayTeam": "HSPN", "venueType": "Away" },
+  { "id": 6, "sport": "Football", "league": "School League", "date": "April 18", "time": "4:30 PM", "homeTeam": "HSPN", "awayTeam": "Westlake", "venueType": "Home" },
+  { "id": 7, "sport": "Football", "league": "School League", "date": "May 2", "time": "5:30 PM", "homeTeam": "Riverdale", "awayTeam": "HSPN", "venueType": "Away" },
+  { "id": 8, "sport": "Tennis", "league": "Spring Open", "date": "May 8", "time": "3:00 PM", "homeTeam": "HSPN", "awayTeam": "UCS", "venueType": "Home" }
+]

@@ -1,4 +1,5 @@
 ﻿import Link from "next/link";
+import SportNav from "@/components/sport-nav";
 
 const cards = [
   { title: "Live", desc: "See games happening now", href: "/live" },
@@ -12,6 +13,7 @@ const cards = [
 export default function HomePage() {
   return (
     <div>
+      <SportNav />
       <section className="relative overflow-hidden rounded-3xl glass p-8">
         <div className="absolute inset-0 opacity-40 [background:radial-gradient(circle_at_20%_10%,rgba(34,211,238,0.35),transparent_40%),radial-gradient(circle_at_80%_20%,rgba(168,85,247,0.35),transparent_45%)]" />
         <div className="relative">
@@ -35,3 +37,6 @@ export default function HomePage() {
     </div>
   );
 }
+
+
+
