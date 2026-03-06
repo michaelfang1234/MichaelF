@@ -15,9 +15,9 @@ export default function HomePage() {
     <main className="space-y-6">
       <SportsBar />
 
-      <section className="rounded-[28px] border border-white/10 bg-gradient-to-r from-[#102a56]/60 to-[#2c1a5f]/60 px-10 py-8">
-        <h2 className="text-6xl font-semibold tracking-tight">Hiba Lions Dashboard</h2>
-        <p className="mt-3 text-[40px] text-slate-200">Premium motion + dynamic experience.</p>
+      <section className="rounded-[24px] border border-white/10 bg-gradient-to-r from-[#102a56]/60 to-[#2c1a5f]/60 px-9 py-7">
+        <h2 className="text-5xl font-semibold tracking-tight">Hiba Lions Dashboard</h2>
+        <p className="mt-3 text-\[34px\] text-slate-200">Premium motion + dynamic experience.</p>
       </section>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -28,7 +28,7 @@ export default function HomePage() {
             className="group rounded-3xl border border-white/10 bg-white/5 p-6 transition hover:bg-white/10"
           >
             <div className="flex items-start justify-between">
-              <h3 className="text-4xl font-semibold">{c.title}</h3>
+              <h3 className="text-3xl font-semibold">{c.title}</h3>
               <span className="text-slate-400 transition group-hover:translate-x-1">→</span>
             </div>
             <p className="mt-2 text-slate-200">{c.desc}</p>
@@ -39,3 +39,4 @@ export default function HomePage() {
     </main>
   );
 }
+

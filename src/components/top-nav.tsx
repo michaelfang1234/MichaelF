@@ -16,7 +16,7 @@ export default function TopNav() {
   const todayLives = useMemo(() => LIVE_LINKS.filter((x) => x.date === today), [today]);
 
   return (
-    <div className="relative flex items-center gap-2 text-slate-300">
+    <div className="relative flex items-center gap-2 text-sm text-slate-300">
       <button type="button" onClick={() => setOpenLive((v) => !v)} className="hover:text-white transition">
         Live
       </button>
@@ -51,3 +51,4 @@ export default function TopNav() {
     </div>
   );
 }
+

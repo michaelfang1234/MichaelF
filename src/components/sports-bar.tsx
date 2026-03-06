@@ -51,7 +51,7 @@ export default function SportsBar() {
 
   function renderContent() {
     if (!activeSport) {
-      return <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><h2 className="text-2xl font-semibold">Explore Hiba Lions Sports</h2><p className="mt-2 text-slate-300">Choose a sport above to view Home, Matches, Standings, Teams, and Players.</p></div>;
+      return <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><h2 className="text-xl font-semibold">Explore Hiba Lions Sports</h2><p className="mt-2 text-slate-300">Choose a sport above to view Home, Matches, Standings, Teams, and Players.</p></div>;
     }
     if (activeSection === "Matches") return <div className="rounded-xl border border-white/10 bg-black/20 p-4"><Link href={`/matches/sport?name=${activeSport.toLowerCase()}`} className="inline-block rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-sm hover:bg-white/20">Open Matches</Link></div>;
     if (activeSection === "Standings") return renderStandings();
@@ -65,7 +65,7 @@ export default function SportsBar() {
         <div className="flex flex-wrap gap-2">
           {sports.map((s) => (
             <button key={s} onClick={() => { setActiveSport(s); setActiveSection("Home"); }}
-              className={clsx("rounded-full border px-3 py-1 text-sm transition", activeSport === s ? "border-[#F26A3D]/50 bg-[#F26A3D]/20 text-orange-100" : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10")}>
+              className={clsx("rounded-full border px-3 py-1 text-xs transition", activeSport === s ? "border-[#F26A3D]/50 bg-[#F26A3D]/20 text-orange-100" : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10")}>
               {s}
             </button>
           ))}
@@ -83,7 +83,7 @@ export default function SportsBar() {
             <div className="space-y-2 lg:col-span-3">
               {sections.map((item) => (
                 <button key={item} onClick={() => setActiveSection(item)}
-                  className={clsx("w-full rounded-lg px-3 py-2 text-left text-sm transition", activeSection === item ? "bg-[#F26A3D] text-white" : "bg-white/5 text-slate-200 hover:bg-white/10")}>
+                  className={clsx("w-full rounded-lg px-3 py-2 text-left text-xs transition", activeSection === item ? "bg-[#F26A3D] text-white" : "bg-white/5 text-slate-200 hover:bg-white/10")}>
                   {item}
                 </button>
               ))}
@@ -119,3 +119,4 @@ function TableBlock({ title, rows }: { title: string; rows: any[] }) {
     </div>
   );
 }
+
