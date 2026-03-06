@@ -35,7 +35,7 @@ export default function SportsBar() {
       return (
         <div className="rounded-xl border border-white/10 bg-black/20 p-4">
           <p className="mb-3 text-slate-300">{activeSport} matches are unified in Matches center.</p>
-          <Link href="/matches" className="inline-block rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-sm hover:bg-white/20">
+          <Link href={`/matches/sport/${activeSport.toLowerCase()}`} className="inline-block rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-sm hover:bg-white/20">
             Open Matches
           </Link>
         </div>
@@ -87,3 +87,4 @@ export default function SportsBar() {
     </div>
   );
 }
+
