@@ -1,40 +1,37 @@
-﻿import Image from "next/image";
+﻿import "./globals.css";
 import Link from "next/link";
-import "./globals.css";
-import SportsBar from "@/components/sports-bar";
+import TopNav from "@/components/top-nav";
 import TopSearch from "@/components/top-search";
 
 export const metadata = {
-  title: "Hiba Lions",
-  description: "Huili Sports Network",
+  title: "Hiba Lions Dashboard",
+  description: "Internal sports dashboard",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
-        <div className="border-b border-white/10 bg-black/30 backdrop-blur">
-          <div className="mx-auto max-w-7xl px-4 py-3">
-            <div className="flex items-center justify-between gap-3">
-              <Link href="/#reset" className="flex items-center gap-3">
-                <Image src="/logo.png" alt="Hiba Lions" width={40} height={40} className="rounded-lg" priority />
-                <div>
-                  <div className="font-semibold">Hiba Lions</div>
-                  <div className="text-xs text-slate-400">Huili Sports Network</div>
-                </div>
-              </Link>
-
-              <div className="flex items-center gap-3">
-                <div className="hidden text-xs text-slate-300 md:block">Live • Scores • News</div>
-                <TopSearch />
+      <body className="min-h-screen bg-[#020817] text-slate-100">
+        <div className="mx-auto max-w-[1440px] px-4 py-4 md:px-6">
+          <header className="flex items-center justify-between gap-4">
+            <Link href="/" className="flex items-center gap-3">
+              <div className="h-14 w-14 overflow-hidden rounded-md border border-white/10 bg-white/5">
+                <img src="/hiba-logo.png" alt="Hiba Lions logo" className="h-full w-full object-cover" />
               </div>
+              <div>
+                <h1 className="text-[42px] leading-none font-bold tracking-tight">Hiba Lions</h1>
+                <p className="text-[34px] leading-tight text-slate-300">Huili Sports Network</p>
+              </div>
+            </Link>
+
+            <div className="flex items-center gap-4">
+              <TopNav />
+              <TopSearch />
             </div>
+          </header>
 
-            <SportsBar />
-          </div>
+          {children}
         </div>
-
-        <main className="mx-auto max-w-7xl px-4 py-6">{children}</main>
       </body>
     </html>
   );
