@@ -1,11 +1,12 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import { LIVE_LINKS } from "@/data/live-links";
 
 export default function TopNav() {
   const [openLive, setOpenLive] = useState(false);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
   const now = new Date();
   const yyyy = now.getFullYear();
@@ -15,8 +16,28 @@ export default function TopNav() {
 
   const todayLives = useMemo(() => LIVE_LINKS.filter((x) => x.date === today), [today]);
 
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (!wrapRef.current) return;
+      if (!wrapRef.current.contains(e.target as Node)) {
+        setOpenLive(false);
+      }
+    }
+
+    function handleEsc(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpenLive(false);
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEsc);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
+
   return (
-    <div className="relative flex items-center gap-2 text-sm text-slate-300">
+    <div ref={wrapRef} className="relative flex items-center gap-2 text-slate-300">
       <button type="button" onClick={() => setOpenLive((v) => !v)} className="hover:text-white transition">
         Live
       </button>
@@ -51,4 +72,3 @@ export default function TopNav() {
     </div>
   );
 }
-
