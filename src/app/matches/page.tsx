@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { MATCHES, type MatchStatus } from "@/data/matches";
 import { getMatchStatus } from "@/lib/match-status";
 
@@ -9,15 +10,8 @@ const statusTabs: Array<"ALL" | MatchStatus> = ["ALL", "UPCOMING", "TODAY", "FIN
 export default function MatchesPage() {
   const [statusFilter, setStatusFilter] = useState<"ALL" | MatchStatus>("ALL");
 
-  const hydrated = useMemo(
-    () => MATCHES.map((m) => ({ ...m, status: getMatchStatus(m) })),
-    []
-  );
-
-  const filtered = useMemo(() => {
-    if (statusFilter === "ALL") return hydrated;
-    return hydrated.filter((m) => m.status === statusFilter);
-  }, [hydrated, statusFilter]);
+  const hydrated = useMemo(() => MATCHES.map((m) => ({ ...m, status: getMatchStatus(m) })), []);
+  const filtered = useMemo(() => statusFilter === "ALL" ? hydrated : hydrated.filter((m) => m.status === statusFilter), [hydrated, statusFilter]);
 
   const volleyball = filtered.filter((m) => m.sport === "Volleyball");
   const basketball = filtered.filter((m) => m.sport === "Basketball");
@@ -31,16 +25,8 @@ export default function MatchesPage() {
         </div>
         <div className="flex flex-wrap gap-2">
           {statusTabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setStatusFilter(tab)}
-              className={[
-                "rounded-full border px-4 py-1.5 text-sm transition",
-                statusFilter === tab
-                  ? "border-cyan-400/50 bg-cyan-400/20 text-cyan-100"
-                  : "border-white/15 bg-white/5 text-slate-200 hover:bg-white/10",
-              ].join(" ")}
-            >
+            <button key={tab} onClick={() => setStatusFilter(tab)}
+              className={["rounded-full border px-4 py-1.5 text-sm transition", statusFilter === tab ? "border-cyan-400/50 bg-cyan-400/20 text-cyan-100" : "border-white/15 bg-white/5 text-slate-200 hover:bg-white/10"].join(" ")}>
               {tab}
             </button>
           ))}
@@ -54,7 +40,7 @@ export default function MatchesPage() {
 }
 
 function SportBlock({ title, items }: { title: string; items: any[] }) {
-  if (items.length === 0) return null;
+  if (!items.length) return null;
   return (
     <section className="space-y-3">
       <h2 className="text-4xl font-semibold">{title}</h2>
@@ -66,8 +52,7 @@ function SportBlock({ title, items }: { title: string; items: any[] }) {
               <span className="rounded-full bg-emerald-400/15 px-2.5 py-0.5 text-emerald-200">{m.status}</span>
             </div>
             <div className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1">
-              <span className="font-medium">{m.home}</span>
-              <span className="text-slate-400">VS</span>
+              <span className="font-medium">{m.home}</span><span className="text-slate-400">VS</span>
               <span className="font-medium">{m.away}</span>
               <span className={`rounded-full px-2.5 py-0.5 text-xs ${m.venueType === "Home" ? "bg-cyan-400/15 text-cyan-200" : "bg-violet-400/15 text-violet-200"}`}>{m.venueType}</span>
             </div>
@@ -75,6 +60,9 @@ function SportBlock({ title, items }: { title: string; items: any[] }) {
               <span>{m.dateLabel}</span>
               <span>{m.timeLabel}</span>
             </div>
+            <Link href={`/matches/${m.id}`} className="mt-4 inline-block rounded-lg border border-white/15 bg-black/30 px-3 py-1.5 text-sm hover:bg-white/10">
+              View Live
+            </Link>
           </article>
         ))}
       </div>
