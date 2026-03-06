@@ -5,21 +5,23 @@ const monthMap: Record<string, number> = {
   july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
 };
 
-function parseDateLabelToLocalDate(dateLabel: string): Date {
-  const [monthRaw, dayRaw] = dateLabel.trim().split(/\s+/);
+export function toDate(match: MatchItem): Date {
+  const [monthRaw, dayRaw] = match.dateLabel.trim().split(/\s+/);
   const month = monthMap[(monthRaw || "").toLowerCase()];
   const day = Number(dayRaw);
+  const [time, ampm] = match.timeLabel.split(" ");
+  const [hh, mm] = time.split(":").map(Number);
+  let hour = hh % 12;
+  if ((ampm || "").toUpperCase() === "PM") hour += 12;
   const year = new Date().getFullYear();
-  return new Date(year, month, day, 0, 0, 0, 0);
+  return new Date(year, month, day, hour, mm || 0, 0, 0);
 }
 
 export function getMatchStatus(match: MatchItem): MatchStatus {
-  const today = new Date();
-  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
-
-  const matchDate = parseDateLabelToLocalDate(match.dateLabel);
-
-  if (matchDate.getTime() < todayStart.getTime()) return "FINISHED";
-  if (matchDate.getTime() === todayStart.getTime()) return "TODAY";
-  return "UPCOMING";
+  const now = new Date();
+  const start = toDate(match);
+  const end = new Date(start.getTime() + 2 * 60 * 60 * 1000); // 默认2小时
+  if (now < start) return "UPCOMING";
+  if (now >= start && now <= end) return "TODAY";
+  return "FINISHED";
 }
