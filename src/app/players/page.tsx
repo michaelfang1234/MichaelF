@@ -1,43 +1,70 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { PLAYERS, type PlayerSport } from "@/data/players";
 
-type P = {
-  id: string;
-  key: string;
-  name: string;
-  sport: "Basketball" | "Volleyball";
-  division: string;
-  height: number;
-  weight: number | null;
-};
-
-const players: P[] = [
-  { id: "michael", key: "michael", name: "Michael Fang", sport: "Basketball", division: "U19 Boys Basketball Team", height: 185, weight: 69 },
-  { id: "andy", key: "andy", name: "Andy Gu", sport: "Basketball", division: "U19 Boys Basketball Team", height: 188, weight: 75 },
-  { id: "ariel", key: "ariel", name: "Ariel Pan", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 171, weight: null },
-  { id: "michelle", key: "michelle", name: "Michelle Xu", sport: "Volleyball", division: "U19 Girls Volleyball Team", height: 170, weight: null },
-];
+const sportTabs: PlayerSport[] = ["Football", "Basketball", "Volleyball", "Swimming"];
 
 export default function PlayersPage() {
   const sp = useSearchParams();
   const q = (sp.get("q") || "").trim().toLowerCase();
+  const sportQ = (sp.get("sport") || "").toLowerCase();
+
+  const [sportFilter, setSportFilter] = useState<PlayerSport | "All">("All");
+
+  useEffect(() => {
+    const m: Record<string, PlayerSport> = {
+      football: "Football",
+      basketball: "Basketball",
+      volleyball: "Volleyball",
+      swimming: "Swimming",
+    };
+    if (m[sportQ]) setSportFilter(m[sportQ]);
+  }, [sportQ]);
 
   const result = useMemo(() => {
-    if (!q) return players;
+    let arr = PLAYERS;
+
+    if (sportFilter !== "All") {
+      arr = arr.filter((p) => p.sport === sportFilter);
+    }
+
+    if (!q) return arr;
+
     const exact =
-      players.find((p) => p.key === q) ||
-      players.find((p) => p.name.toLowerCase() === q);
+      arr.find((p) => p.key === q) ||
+      arr.find((p) => p.name.toLowerCase() === q);
+
     if (exact) return [exact];
-    const fuzzy = players.find((p) => `${p.key} ${p.name}`.toLowerCase().includes(q));
-    return fuzzy ? [fuzzy] : [];
-  }, [q]);
+
+    const fuzzy = arr.filter((p) => `${p.key} ${p.name} ${p.sport} ${p.division}`.toLowerCase().includes(q));
+    return fuzzy;
+  }, [q, sportFilter]);
 
   return (
     <main className="space-y-4">
       <h1 className="text-3xl font-semibold tracking-tight">Players</h1>
+
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setSportFilter("All")}
+          className={`rounded-full border px-3 py-1 text-sm ${sportFilter === "All" ? "border-cyan-400/50 bg-cyan-400/20 text-cyan-100" : "border-white/10 bg-white/5 text-slate-200"}`}
+        >
+          All
+        </button>
+        {sportTabs.map((s) => (
+          <button
+            key={s}
+            onClick={() => setSportFilter(s)}
+            className={`rounded-full border px-3 py-1 text-sm ${sportFilter === s ? "border-cyan-400/50 bg-cyan-400/20 text-cyan-100" : "border-white/10 bg-white/5 text-slate-200"}`}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+
       {q ? <p className="text-sm text-orange-200">Search: &quot;{q}&quot; • {result.length} result(s)</p> : null}
 
       <div className="grid gap-3 md:grid-cols-2">
@@ -54,5 +81,3 @@ export default function PlayersPage() {
     </main>
   );
 }
-
-

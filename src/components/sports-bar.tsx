@@ -22,10 +22,9 @@ const leagueBySport: Record<SportKey, string> = {
 export default function SportsBar() {
   const [activeSport, setActiveSport] = useState<SportKey | null>(null);
   const [activeSection, setActiveSection] = useState<SectionKey>("Home");
-  const [bFilter, setBFilter] = useState<BFilter>("All");
+  const [bFilter, setBFilter] = useState<BFilter>("U15 Boys");
 
   const filteredBasketball = useMemo(() => {
-    if (bFilter === "All") return basketballStandings;
     return basketballStandings.filter((r) => r.group === bFilter);
   }, [bFilter]);
 
@@ -40,7 +39,7 @@ export default function SportsBar() {
       return (
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
-            {(["All", "U15 Boys", "U15 Girls"] as BFilter[]).map((f) => (
+            {(["U15 Boys", "U15 Girls"] as BFilter[]).map((f) => (
               <button
                 key={f}
                 onClick={() => setBFilter(f)}
@@ -91,7 +90,7 @@ export default function SportsBar() {
     if (activeSection === "Players") {
       return (
         <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-          <Link href="/players" className="inline-block rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-sm hover:bg-white/20">
+          <Link href={`/players?sport=${activeSport.toLowerCase()}`} className="inline-block rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-sm hover:bg-white/20">
             Open Players
           </Link>
         </div>
@@ -169,3 +168,4 @@ function TableBlock({ title, rows }: { title: string; rows: any[] }) {
     </div>
   );
 }
+
