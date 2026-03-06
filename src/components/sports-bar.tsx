@@ -1,11 +1,13 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
+import { volleyballStandings, basketballStandings } from "@/data/standings";
 
 type SportKey = "Football" | "Basketball" | "Volleyball" | "Swimming";
 type SectionKey = "Home" | "Matches" | "Standings" | "Teams" | "Players";
+type BFilter = "All" | "U15 Boys" | "U15 Girls";
 
 const sports: SportKey[] = ["Football", "Basketball", "Volleyball", "Swimming"];
 const sections: SectionKey[] = ["Home", "Matches", "Standings", "Teams", "Players"];
@@ -20,6 +22,48 @@ const leagueBySport: Record<SportKey, string> = {
 export default function SportsBar() {
   const [activeSport, setActiveSport] = useState<SportKey | null>(null);
   const [activeSection, setActiveSection] = useState<SectionKey>("Home");
+  const [bFilter, setBFilter] = useState<BFilter>("All");
+
+  const filteredBasketball = useMemo(() => {
+    if (bFilter === "All") return basketballStandings;
+    return basketballStandings.filter((r) => r.group === bFilter);
+  }, [bFilter]);
+
+  function renderStandings() {
+    if (activeSport === "Volleyball") {
+      return (
+        <TableBlock title="Volleyball Standings (U19 Girls)" rows={volleyballStandings} />
+      );
+    }
+
+    if (activeSport === "Basketball") {
+      return (
+        <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {(["All", "U15 Boys", "U15 Girls"] as BFilter[]).map((f) => (
+              <button
+                key={f}
+                onClick={() => setBFilter(f)}
+                className={clsx(
+                  "rounded-full border px-3 py-1 text-xs transition",
+                  bFilter === f ? "border-cyan-400/50 bg-cyan-400/20 text-cyan-100" : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
+                )}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+          <TableBlock title="Basketball Standings" rows={filteredBasketball} />
+        </div>
+      );
+    }
+
+    return (
+      <div className="rounded-xl border border-white/10 bg-black/20 p-4 text-slate-300">
+        {activeSport} standings coming soon.
+      </div>
+    );
+  }
 
   function renderContent() {
     if (!activeSport) {
@@ -34,13 +78,15 @@ export default function SportsBar() {
     if (activeSection === "Matches") {
       return (
         <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-          <p className="mb-3 text-slate-300">{activeSport} matches are unified in Matches center.</p>
+          <p className="mb-3 text-slate-300">{activeSport} matches page</p>
           <Link href={`/matches/sport?name=${activeSport.toLowerCase()}`} className="inline-block rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-sm hover:bg-white/20">
             Open Matches
           </Link>
         </div>
       );
     }
+
+    if (activeSection === "Standings") return renderStandings();
 
     if (activeSection === "Players") {
       return (
@@ -88,4 +134,38 @@ export default function SportsBar() {
   );
 }
 
-
+function TableBlock({ title, rows }: { title: string; rows: any[] }) {
+  return (
+    <div className="rounded-xl border border-white/10 bg-black/20 p-4">
+      <h3 className="mb-3 text-lg font-semibold">{title}</h3>
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-sm">
+          <thead className="text-slate-400">
+            <tr className="border-b border-white/10">
+              <th className="py-2 text-left">Team</th>
+              <th className="py-2 text-left">Group</th>
+              <th className="py-2 text-left">P</th>
+              <th className="py-2 text-left">W</th>
+              <th className="py-2 text-left">L</th>
+              <th className="py-2 text-left">PF</th>
+              <th className="py-2 text-left">PA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={`${r.team}-${r.group}-${i}`} className="border-b border-white/5">
+                <td className="py-2">{r.team}</td>
+                <td className="py-2">{r.group}</td>
+                <td className="py-2">{r.played}</td>
+                <td className="py-2">{r.wins}</td>
+                <td className="py-2">{r.losses}</td>
+                <td className="py-2">{r.pointsFor}</td>
+                <td className="py-2">{r.pointsAgainst}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
