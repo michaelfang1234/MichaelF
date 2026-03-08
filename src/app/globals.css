@@ -2,46 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-  --huili-orange: #F26A3D;
-  --huili-orange-dark: #D9552B;
-  --bg-main: #0B1220;
-  --bg-card: #111827;
-  --text-main: #F8FAFC;
-  --text-sub: #CBD5E1;
-  --line: rgba(255,255,255,0.12);
+:root{
+  --warm-bg-top:#f4e7d3;
+  --warm-bg-mid:#f0dcc4;
+  --warm-bg-bottom:#ead2d6;
+
+  --panel:#f7efe4;
+  --panel-2:#f5ebdf;
+  --border:#d9c5ad;
+
+  --text:#1f2937;
+  --muted:#4b5563;
+
+  --hero:#8f86a8;          /* softer purple block */
+  --hero-text:#1f2a44;     /* darker readable title */
 }
 
-html { scroll-behavior: smooth; }
-
-body {
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(242,106,61,0.20), transparent 50%),
-    radial-gradient(900px 500px at 90% 0%, rgba(56,189,248,0.10), transparent 45%),
-    var(--bg-main);
-  color: var(--text-main);
+html, body {
+  min-height: 100%;
+  background: linear-gradient(180deg,var(--warm-bg-top) 0%,var(--warm-bg-mid) 52%,var(--warm-bg-bottom) 100%);
+  color: var(--text);
 }
 
-* { -webkit-tap-highlight-color: transparent; }
-
-.glass {
-  background: color-mix(in oklab, var(--bg-card) 82%, black);
-  border: 1px solid var(--line);
-  backdrop-filter: blur(8px);
+/* Generic panels/cards */
+.rounded-3xl,
+.rounded-2xl,
+.rounded-xl {
+  border-color: var(--border) !important;
+  box-shadow: 0 6px 18px rgba(84, 56, 20, 0.08);
 }
 
-.brand-pill {
-  background: rgba(242,106,61,0.18);
-  color: #FFD9CC;
-  border: 1px solid rgba(242,106,61,0.35);
+/* convert dark utility blocks to warm cards */
+[class*="bg-[#020817]"],
+[class*="bg-[#0f172a]"],
+[class*="bg-black/20"],
+[class*="bg-black/30"],
+[class*="bg-white/5"],
+[class*="bg-white/10"] {
+  background-color: color-mix(in oklab, var(--panel) 88%, white 12%) !important;
 }
 
-.card-hover {
-  transition: transform 220ms ease, background-color 220ms ease, border-color 220ms ease;
+/* text readability fixes */
+.text-slate-50,.text-slate-100,.text-slate-200,.text-slate-300,.text-slate-400,.text-slate-500,
+.text-white {
+  color: var(--text) !important;
 }
-.card-hover:hover {
-  transform: translateY(-3px);
-  border-color: rgba(242,106,61,0.35);
+.text-xs,.text-sm { color: var(--muted) !important; }
+
+/* hero block */
+.hero-warm {
+  background: var(--hero) !important;
+  border: 1px solid color-mix(in oklab, var(--hero), #6f6790 45%) !important;
+}
+.hero-warm h2 {
+  color: var(--hero-text) !important;
 }
 
+/* nav pills/button still visible */
+button, .btn, [role="button"] {
+  border-color: #bfa98e !important;
+}

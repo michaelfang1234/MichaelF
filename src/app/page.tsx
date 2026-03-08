@@ -15,7 +15,7 @@ export default function HomePage() {
     <main className="space-y-6">
       <SportsBar />
 
-      <section className="rounded-[24px] border border-white/10 bg-gradient-to-r from-[#102a56]/60 to-[#2c1a5f]/60 px-9 py-7">
+      <section className="hero-warm rounded-[24px] px-9 py-7">
         <h2 className="text-5xl font-semibold tracking-tight">Hiba Lions Dashboard</h2>
         <p className="mt-3 text-\[34px\] text-slate-200">Premium motion + dynamic experience.</p>
       </section>
@@ -39,4 +39,5 @@ export default function HomePage() {
     </main>
   );
 }
+
 
