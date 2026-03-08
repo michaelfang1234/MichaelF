@@ -17,7 +17,6 @@ export default function HomePage() {
 
       <section className="hero-warm rounded-[24px] px-9 py-7">
         <h2 className="text-5xl font-semibold tracking-tight">Hiba Lions Dashboard</h2>
-        <p className="mt-3 text-\[34px\] text-slate-200">Premium motion + dynamic experience.</p>
       </section>
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
