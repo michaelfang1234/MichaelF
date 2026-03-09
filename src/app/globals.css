@@ -14,8 +14,12 @@
   --text:#1f2937;
   --muted:#4b5563;
 
-  --hero:#8f86a8;          /* softer purple block */
-  --hero-text:#1f2a44;     /* darker readable title */
+  --hero:#b8afd2;          /* lighter purple */
+  --hero-text:#1f2a44;
+
+  --hover-bg:#efdcc3;      /* hover fill */
+  --hover-border:#caa981;  /* hover border */
+  --hover-text:#1b2a44;
 }
 
 html, body {
@@ -24,15 +28,13 @@ html, body {
   color: var(--text);
 }
 
-/* Generic panels/cards */
-.rounded-3xl,
-.rounded-2xl,
-.rounded-xl {
+/* generic panels/cards */
+.rounded-3xl, .rounded-2xl, .rounded-xl {
   border-color: var(--border) !important;
   box-shadow: 0 6px 18px rgba(84, 56, 20, 0.08);
 }
 
-/* convert dark utility blocks to warm cards */
+/* convert dark utility blocks */
 [class*="bg-[#020817]"],
 [class*="bg-[#0f172a]"],
 [class*="bg-black/20"],
@@ -42,23 +44,61 @@ html, body {
   background-color: color-mix(in oklab, var(--panel) 88%, white 12%) !important;
 }
 
-/* text readability fixes */
-.text-slate-50,.text-slate-100,.text-slate-200,.text-slate-300,.text-slate-400,.text-slate-500,
-.text-white {
+/* text readability */
+.text-slate-50,.text-slate-100,.text-slate-200,.text-slate-300,.text-slate-400,.text-slate-500,.text-white {
   color: var(--text) !important;
 }
 .text-xs,.text-sm { color: var(--muted) !important; }
 
-/* hero block */
+/* hero bar */
 .hero-warm {
   background: var(--hero) !important;
-  border: 1px solid color-mix(in oklab, var(--hero), #6f6790 45%) !important;
+  border: 1px solid #9f95be !important;
 }
 .hero-warm h2 {
   color: var(--hero-text) !important;
 }
 
-/* nav pills/button still visible */
-button, .btn, [role="button"] {
-  border-color: #bfa98e !important;
+/* ===== Hover states for clickable items ===== */
+
+/* top nav links/buttons */
+a, button {
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .12s ease;
+}
+a:hover, button:hover {
+  color: var(--hover-text) !important;
+}
+
+/* sport pills / top small buttons */
+button:hover,
+[role="button"]:hover {
+  background-color: var(--hover-bg) !important;
+  border-color: var(--hover-border) !important;
+}
+
+/* dashboard cards (/live /matches ...) */
+.group:hover {
+  background-color: #f2e5d3 !important;
+  border-color: var(--hover-border) !important;
+  transform: translateY(-1px);
+}
+.group:hover h3,
+.group:hover p {
+  color: #1f2a44 !important;
+}
+
+/* left side menu items inside sports panel */
+nav a:hover,
+aside a:hover,
+ul a:hover {
+  background-color: var(--hover-bg) !important;
+  border-color: var(--hover-border) !important;
+  color: #1f2a44 !important;
+  border-radius: 10px;
+}
+
+/* dropdown live items */
+a.block:hover {
+  background-color: #ecd9bf !important;
+  border-color: var(--hover-border) !important;
 }
