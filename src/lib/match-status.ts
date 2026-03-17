@@ -92,3 +92,11 @@ export function toSortableDate(matchDateLabel?: string | null, timeLabel?: strin
 
   return new Date(`${year}-${month}-${day}T${hh}:${mm}:00`);
 }
+
+/* backward compatibility for old imports */
+export function toDate(match: {
+  dateLabel?: string | null;
+  timeLabel?: string | null;
+}) {
+  return toSortableDate(match?.dateLabel, match?.timeLabel);
+}
