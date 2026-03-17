@@ -1,66 +1,90 @@
-﻿"use client";
+﻿import Link from "next/link";
+import { MATCHES } from "@/data/matches";
+import { computeDisplayStatus, toSortableDate } from "@/lib/match-status";
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { MATCHES, type Sport } from "@/data/matches";
-import { getMatchStatus } from "@/lib/match-status";
+export default function SportMatchesPage({
+  searchParams,
+}: {
+  searchParams?: { name?: string };
+}) {
+  const sportName = (searchParams?.name || "").toLowerCase();
 
-export default function SportMatchesPage() {
-  const sp = useSearchParams();
-  const raw = (sp.get("name") || "").toLowerCase();
+  const filtered = MATCHES
+    .filter((m) => m.sport.toLowerCase() === sportName)
+    .sort((a, b) => toSortableDate(a.dateLabel, a.timeLabel).getTime() - toSortableDate(b.dateLabel, b.timeLabel).getTime());
 
-  const normalized =
-    raw === "volleyball" ? "Volleyball" :
-    raw === "basketball" ? "Basketball" :
-    raw === "football" ? "Football" :
-    raw === "swimming" ? "Swimming" :
-    "";
-
-  if (normalized === "Football" || normalized === "Swimming") {
-    return (
-      <main className="space-y-4">
-        <Link href="/" className="text-sm text-slate-400 hover:text-white">← Back to Dashboard</Link>
-        <h1 className="text-4xl font-semibold">{normalized} Matches</h1>
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-          <p className="text-slate-300">Coming soon. Placeholder data will be added later.</p>
-        </div>
-      </main>
-    );
-  }
-
-  const sport = normalized as Sport;
-  const all = MATCHES.filter((m) => m.sport === sport).map((m) => ({ ...m, status: getMatchStatus(m) }));
+  const title =
+    sportName.length > 0
+      ? sportName.charAt(0).toUpperCase() + sportName.slice(1)
+      : "Sport";
 
   return (
-    <main className="space-y-5">
-      <Link href="/" className="text-sm text-slate-400 hover:text-white">← Back to Dashboard</Link>
-      <div>
-        <h1 className="text-4xl font-semibold tracking-tight">{sport} Matches</h1>
-        <p className="mt-1 text-slate-400">Full schedule • all matches</p>
-      </div>
+    <main className="space-y-6">
+      <Link href="/" className="inline-block text-sm text-slate-600 hover:text-slate-900">
+        ← Back to Dashboard
+      </Link>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {all.map((m) => (
-          <article key={m.id} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="mb-3 flex items-center justify-between text-sm">
-              <span className="text-slate-400">{m.group}</span>
-              <span className="rounded-full bg-emerald-400/15 px-2.5 py-0.5 text-emerald-200">{m.status}</span>
-            </div>
-            <div className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1">
-              <span className="font-medium">{m.home}</span>
-              <span className="text-slate-400">VS</span>
-              <span className="font-medium">{m.away}</span>
-              <span className={`rounded-full px-2.5 py-0.5 text-xs ${m.venueType === "Home" ? "bg-cyan-400/15 text-cyan-200" : "bg-violet-400/15 text-violet-200"}`}>{m.venueType}</span>
-            </div>
-            <div className="mt-4 flex items-center justify-between text-slate-300">
-              <span>{m.dateLabel}</span><span>{m.timeLabel}</span>
-            </div>
-            <Link href={`/matches/${m.id}`} className="mt-4 inline-block rounded-lg border border-white/15 bg-black/30 px-3 py-1.5 text-sm hover:bg-white/10">
-              Open Match
-            </Link>
-          </article>
-        ))}
-      </div>
+      <section>
+        <h1 className="text-5xl font-semibold tracking-tight">{title} Matches</h1>
+        <p className="mt-2 text-xl text-slate-700">Full schedule • all matches</p>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2">
+        {filtered.map((match) => {
+          const displayStatus = computeDisplayStatus(
+            (match as any).dateLabel,
+            (match as any).status
+          );
+
+          return (
+            <article
+              key={match.id}
+              className="rounded-[28px] border border-black/10 bg-white/70 p-7 shadow-sm"
+            >
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-lg text-slate-800">{match.group}</p>
+                </div>
+
+                <span className="rounded-full bg-emerald-100 px-4 py-1 text-sm font-medium text-emerald-700">
+                  {displayStatus}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-[1fr_auto] gap-6">
+                <div className="space-y-3 text-[22px] leading-tight text-slate-900">
+                  <div>{match.home}</div>
+                  <div>{match.away}</div>
+                </div>
+
+                <div className="space-y-3 text-right">
+                  <div className="text-[22px] leading-tight text-slate-900">VS</div>
+                  <div>
+                    <span className="rounded-full bg-sky-100 px-4 py-1 text-sm text-slate-700">
+                      {match.venueType}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 grid grid-cols-[1fr_auto] items-end gap-6">
+                <div className="text-[20px] text-slate-800">{match.dateLabel}</div>
+                <div className="text-[20px] text-slate-800">{match.timeLabel}</div>
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href={`/matches/${match.id}`}
+                  className="text-[18px] text-slate-700 hover:text-slate-950"
+                >
+                  Open Match
+                </Link>
+              </div>
+            </article>
+          );
+        })}
+      </section>
     </main>
   );
 }
+

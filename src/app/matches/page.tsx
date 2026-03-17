@@ -1,61 +1,82 @@
-﻿"use client";
-
-import Link from "next/link";
-import { useMemo } from "react";
+﻿import Link from "next/link";
 import { MATCHES } from "@/data/matches";
-import { getMatchStatus, toDate } from "@/lib/match-status";
+import { computeDisplayStatus, toSortableDate } from "@/lib/match-status";
 
 export default function MatchesPage() {
-  const recentThree = useMemo(() => {
-    const now = new Date();
+  const now = new Date();
 
-    const full = MATCHES.map((m) => {
-      const start = toDate(m);
-      const status = getMatchStatus(m);
-      const diff = Math.abs(start.getTime() - now.getTime());
-      return { ...m, start, status, diff };
-    }).sort((a, b) => a.start.getTime() - b.start.getTime());
-
-    const notFinished = full.filter((m) => m.status !== "FINISHED");
-    if (notFinished.length >= 3) return notFinished.slice(0, 3);
-
-    const need = 3 - notFinished.length;
-    const finishedRecent = full.filter((m) => m.status === "FINISHED").sort((a, b) => b.start.getTime() - a.start.getTime()).slice(0, need);
-    return [...finishedRecent.reverse(), ...notFinished];
-  }, []);
+  const nearestFour = [...MATCHES]
+    .sort((a, b) => {
+      const da = Math.abs(toSortableDate(a.dateLabel, a.timeLabel).getTime() - now.getTime());
+      const db = Math.abs(toSortableDate(b.dateLabel, b.timeLabel).getTime() - now.getTime());
+      return da - db;
+    })
+    .slice(0, 4);
 
   return (
-    <main className="space-y-5">
-      <div>
-        <h1 className="text-4xl font-semibold tracking-tight">Matches</h1>
-        <p className="mt-1 text-slate-400">Unified live match center • auto rolling latest 3</p>
-      </div>
+    <main className="space-y-6">
+      <section>
+        <h1 className="text-5xl font-semibold tracking-tight">Matches</h1>
+        <p className="mt-2 text-xl text-slate-700">Nearest 4 matches</p>
+      </section>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {recentThree.map((m) => (
-          <article key={m.id} className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="mb-3 flex items-center justify-between text-sm">
-              <span className="text-slate-400">{m.sport} • {m.group}</span>
-              <span className="rounded-full bg-emerald-400/15 px-2.5 py-0.5 text-emerald-200">{m.status}</span>
-            </div>
+      <section className="grid gap-4 md:grid-cols-2">
+        {nearestFour.map((match) => {
+          const displayStatus = computeDisplayStatus(
+            (match as any).dateLabel,
+            (match as any).status
+          );
 
-            <div className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1">
-              <span className="font-medium">{m.home}</span><span className="text-slate-400">VS</span>
-              <span className="font-medium">{m.away}</span>
-              <span className={`rounded-full px-2.5 py-0.5 text-xs ${m.venueType === "Home" ? "bg-cyan-400/15 text-cyan-200" : "bg-violet-400/15 text-violet-200"}`}>{m.venueType}</span>
-            </div>
+          return (
+            <article
+              key={match.id}
+              className="rounded-[28px] border border-black/10 bg-white/70 p-7 shadow-sm"
+            >
+              <div className="mb-6 flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-lg text-slate-800">{match.group}</p>
+                  <p className="mt-1 text-sm text-slate-600">{match.sport}</p>
+                </div>
 
-            <div className="mt-4 flex items-center justify-between text-slate-300">
-              <span>{m.dateLabel}</span>
-              <span>{m.timeLabel}</span>
-            </div>
+                <span className="rounded-full bg-emerald-100 px-4 py-1 text-sm font-medium text-emerald-700">
+                  {displayStatus}
+                </span>
+              </div>
 
-            <Link href={`/matches/${m.id}`} className="mt-4 inline-block rounded-lg border border-white/15 bg-black/30 px-3 py-1.5 text-sm hover:bg-white/10">
-              Open Match
-            </Link>
-          </article>
-        ))}
-      </div>
+              <div className="grid grid-cols-[1fr_auto] gap-6">
+                <div className="space-y-3 text-[22px] leading-tight text-slate-900">
+                  <div>{match.home}</div>
+                  <div>{match.away}</div>
+                </div>
+
+                <div className="space-y-3 text-right">
+                  <div className="text-[22px] leading-tight text-slate-900">VS</div>
+                  <div>
+                    <span className="rounded-full bg-sky-100 px-4 py-1 text-sm text-slate-700">
+                      {match.venueType}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 grid grid-cols-[1fr_auto] items-end gap-6">
+                <div className="text-[20px] text-slate-800">{match.dateLabel}</div>
+                <div className="text-[20px] text-slate-800">{match.timeLabel}</div>
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href={`/matches/${match.id}`}
+                  className="text-[18px] text-slate-700 hover:text-slate-950"
+                >
+                  Open Match
+                </Link>
+              </div>
+            </article>
+          );
+        })}
+      </section>
     </main>
   );
 }
+
